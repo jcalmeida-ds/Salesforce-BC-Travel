@@ -216,7 +216,7 @@ Roteiro de validação do modelo (Card 10), usando dados fictícios:
 
 **Schema Builder**
 
-![Schema Builder](docs/images/03-schema-builder.png)
+![Schema Builder](03-schema-builder.jpeg)
 
 ### Campos dos objetos
 
