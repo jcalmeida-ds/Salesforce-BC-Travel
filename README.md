@@ -222,10 +222,10 @@ Roteiro de validação do modelo (Card 10), usando dados fictícios:
 
 | Objeto | Imagem |
 |---|---|
-| Cliente | ![Campos Cliente](docs/imagens/02-campos-cliente.png) |
-| Destino | ![Campos Destino](docs/imagens/06-campos-destino.png) |
-| Pacote de Viagem | ![Campos Pacote](docs/imagens/07-campos-pacote.png) |
-| Reserva | ![Campos Reserva](docs/imagens/08-campos-reserva.png) |
+| Cliente | ![Campos Cliente](docs/imagens/02-campos-cliente.png.jpeg) |
+| Destino | ![Campos Destino](docs/imagens/06-campos-destino.png.jpeg) |
+| Pacote de Viagem | ![Campos Pacote](docs/imagens/07-campos-pacote.png.jpeg) |
+| Reserva | ![Campos Reserva](docs/imagens/08-campos-reserva.png.jpeg) |
 
 ### Fórmulas e totalizações
 
