@@ -209,8 +209,8 @@ Roteiro de validação do modelo (Card 10), usando dados fictícios:
 
 | | |
 |---|---|
-| **Objetos criados** | ![Objetos](docs/images/01-objetos.png.jpeg) |
-| **App BC Travel** | ![App](docs/images/04-app-bc-travel.png) |
+| **Objetos criados** | ![Objetos](docs/imagens/01-objetos.png) |
+| **App BC Travel** | ![App](docs/imagens/04-app-bc-travel.png) |
 
 ### Modelo de dados
 
@@ -222,25 +222,25 @@ Roteiro de validação do modelo (Card 10), usando dados fictícios:
 
 | Objeto | Imagem |
 |---|---|
-| Cliente | ![Campos Cliente](docs/images/02-campos-cliente.png) |
-| Destino | ![Campos Destino](docs/images/06-campos-destino.png) |
-| Pacote de Viagem | ![Campos Pacote](docs/images/07-campos-pacote.png) |
-| Reserva | ![Campos Reserva](docs/images/08-campos-reserva.png) |
+| Cliente | ![Campos Cliente](docs/imagens/02-campos-cliente.png) |
+| Destino | ![Campos Destino](docs/imagens/06-campos-destino.png) |
+| Pacote de Viagem | ![Campos Pacote](docs/imagens/07-campos-pacote.png) |
+| Reserva | ![Campos Reserva](docs/imagens/08-campos-reserva.png) |
 
 ### Fórmulas e totalizações
 
 | Evidência | Imagem |
 |---|---|
-| Fórmula do Preço Total | ![Fórmula](docs/images/09-formula-preco-total.png) |
-| Pacote com Número de Reservas = 2 | ![Roll-up](docs/images/05-rollup-reservas.png) |
+| Fórmula do Preço Total | ![Fórmula](docs/imagens/09-formula-preco-total.png) |
+| Pacote com Número de Reservas = 2 | ![Roll-up](docs/imagens/05-rollup-reservas.png) |
 
 ### Testes com dados
 
 | Evidência | Imagem |
 |---|---|
-| Cliente com Idade calculada | ![Idade](docs/images/12-cliente-idade.png) |
-| Reservas com numeração automática | ![Reservas](docs/images/10-reservas-numeracao.png) |
-| Atividades do pacote | ![Atividades](docs/images/11-pacote-atividades.png) |
+| Cliente com Idade calculada | ![Idade](docs/imagens/12-cliente-idade.png) |
+| Reservas com numeração automática | ![Reservas](docs/imagens/10-reservas-numeracao.png) |
+| Atividades do pacote | ![Atividades](docs/imagens/11-pacote-atividades.png) |
 
 > Todos os dados exibidos são **fictícios**.
 
