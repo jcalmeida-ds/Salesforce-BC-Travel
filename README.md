@@ -209,7 +209,7 @@ Roteiro de validação do modelo (Card 10), usando dados fictícios:
 
 | | |
 |---|---|
-| **Objetos criados** | ![Objetos](docs/imagens/01-objetos.png) |
+| **Objetos criados** | ![Objetos](docs/imagens/01-objetos.png.jpeg) |
 | **App BC Travel** | ![App](docs/imagens/04-app-bc-travel.png) |
 
 ### Modelo de dados
