@@ -1,6 +1,6 @@
 # ✈️ BC Travel — Gestão de Agência de Viagens no Salesforce
 
-Projeto prático de **modelagem de dados no Salesforce** (Lightning Experience), baseado no case **TravelCorp** do curso **Corporação Salesforce** e adaptado para a minha agência fictícia, a **BC Travel**.
+Projeto prático de **modelagem de dados no Salesforce** (Lightning Experience), baseado no case **TravelCorp** do curso **Corporação SalesForce** adaptado para a minha agência fictícia, a **BC Travel**.
 
 O objetivo é praticar, em uma Developer Edition, o ciclo completo de construção de um app declarativo (*clicks, not code*): objetos personalizados, campos, relacionamentos, fórmulas, roll-up summary e validação com dados de teste.
 
@@ -34,7 +34,20 @@ Este projeto faz parte do meu estudo de Salesforce e tem como objetivos:
 - Treinar a resolução de problemas de modelagem de dados
 - Estruturar um portfólio público com evidências do que construí
 
-A estrutura é guiada por *cards* (user stories com critérios de aceitação), no estilo de um backlog real.
+A estrutura é guiada por *cards* (user stories com critérios de aceitação), no estilo de um backlog real:
+
+| Card | Entrega |
+|---|---|
+| 01 | Criação dos objetos personalizados |
+| 02 | Campos do objeto Cliente |
+| 03 | Campos do objeto Destino |
+| 04 | Campos do objeto Pacote de Viagem |
+| 05 | Campos do objeto Reserva |
+| 06 | Campos do objeto Atividade Turística |
+| 07 | Relacionamentos entre os objetos |
+| 08 | Objeto de junção Pacote-Atividade (muitos-para-muitos) |
+| 09 | Resumo de totalização no Pacote |
+| 10 | Teste completo do modelo de dados |
 
 ---
 
@@ -48,7 +61,7 @@ A estrutura é guiada por *cards* (user stories com critérios de aceitação), 
                                                                                                     Usuário
 ```
 
-> Diagrama gerado também pelo **Schema Builder** do Salesforce (veja a seção de evidências).
+> O diagrama real, gerado pelo **Schema Builder** do Salesforce, está na seção de [evidências](#-evidências-prints).
 
 ---
 
@@ -58,11 +71,12 @@ A estrutura é guiada por *cards* (user stories com critérios de aceitação), 
 | Campo | Tipo |
 |---|---|
 | Nome Completo | Texto (nome do registro) |
-| CPF | Texto |
+| CPF | Texto (exclusivo) |
 | E-mail | E-mail |
 | Data de Nascimento | Data |
 | Cliente VIP? | Caixa de seleção |
 | Idade | Fórmula (Número) |
+| Responsável | Relacionamento de pesquisa (Usuário) |
 
 ### Destino
 | Campo | Tipo |
@@ -77,9 +91,10 @@ A estrutura é guiada por *cards* (user stories com critérios de aceitação), 
 | Campo | Tipo |
 |---|---|
 | Nome do Pacote | Texto (nome do registro) |
+| Destino | Mestre-detalhe (Destino) |
 | Preço Base | Moeda |
-| Duração | Número |
-| Nível de Luxo | Lista de opções |
+| Duração (dias) | Número |
+| Nível de Luxo | Lista de opções (⭐ a ⭐⭐⭐⭐⭐) |
 | Preço Total | Fórmula (Moeda) |
 | Número de Reservas | Resumo de totalização (COUNT) |
 
@@ -87,8 +102,10 @@ A estrutura é guiada por *cards* (user stories com critérios de aceitação), 
 | Campo | Tipo |
 |---|---|
 | Nome da Reserva | Numeração automática (`RES-{0000}`) |
+| Cliente | Mestre-detalhe (Cliente) |
+| Pacote de Viagem | Mestre-detalhe (Pacote de Viagem) |
 | Data da Reserva | Data/Hora |
-| Status da Reserva | Lista de opções |
+| Status da Reserva | Lista de opções (Pendente, Confirmada, Cancelada, Concluída) |
 | Valor Pago | Moeda |
 | Quantidade de Membros | Número |
 
@@ -102,8 +119,8 @@ A estrutura é guiada por *cards* (user stories com critérios de aceitação), 
 ### Pacote-Atividade (objeto de junção)
 | Campo | Tipo |
 |---|---|
-| Pacote de Viagem | Relacionamento de pesquisa (Lookup) |
-| Atividade Turística | Relacionamento de pesquisa (Lookup) |
+| Pacote de Viagem | Relacionamento de pesquisa (obrigatório) |
+| Atividade Turística | Relacionamento de pesquisa (obrigatório) |
 | Ordem de Exibição | Número |
 | Inclusa por padrão? | Caixa de seleção |
 
@@ -126,11 +143,27 @@ O objeto **Pacote-Atividade** resolve a relação **muitos-para-muitos** entre p
 
 ## 🧮 Fórmulas e totalizações
 
-**Idade do cliente**
+**Idade do cliente** (Cliente)
 
 ```text
 FLOOR((TODAY() - Data_de_Nascimento__c) / 365.25)
 ```
+
+**Preço Total** (Pacote de Viagem) — o preço sobe 25% do Preço Base a cada estrela do Nível de Luxo:
+
+```text
+IF(ISPICKVAL(Nivel_de_Luxo__c, ""),
+   Preco_Base__c,
+   Preco_Base__c * (1 + (LEN(TEXT(Nivel_de_Luxo__c)) - 1) * 0.25))
+```
+
+| Nível | Multiplicador |
+|---|---|
+| ⭐ | 1,00 |
+| ⭐⭐ | 1,25 |
+| ⭐⭐⭐ | 1,50 |
+| ⭐⭐⭐⭐ | 1,75 |
+| ⭐⭐⭐⭐⭐ | 2,00 |
 
 **Número de Reservas** (Resumo de totalização no Pacote de Viagem)
 
@@ -138,59 +171,78 @@ FLOOR((TODAY() - Data_de_Nascimento__c) / 365.25)
 - Tipo: `COUNT`
 - Depende do Master-Detail entre Reserva e Pacote de Viagem
 
-**Preço Total** (Pacote de Viagem)
-
-<!-- Ajuste esta seção para a fórmula que você de fato usou -->
-```text
-Preco_Base__c * CASE(TEXT(Nivel_de_Luxo__c),
-    "Econômico", 1,
-    "Conforto", 1.2,
-    "Luxo", 1.5,
-    1)
-```
-
 ---
 
 ## 🛠️ Como reproduzir
 
 1. Crie uma **Developer Edition** gratuita em [developer.salesforce.com/signup](https://developer.salesforce.com/signup).
 2. Crie o app **BC Travel** em *Configuração > Gerenciador de Aplicativos > Novo App Lightning*.
-3. Crie os 6 objetos personalizados em *Gerenciador de Objetos > Criar*, marcando a opção de criar a **guia (aba)** do objeto e incluindo-a no app.
-4. Crie os campos de cada objeto (seções acima).
-5. Crie os **relacionamentos** antes do Resumo de totalização, já que o roll-up depende do Master-Detail. Crie-os com as tabelas ainda vazias.
-6. Crie a fórmula de Preço Total e o Resumo de totalização no Pacote de Viagem.
-7. Insira registros de teste e valide (próxima seção).
-
-> Dica: pelo App Launcher, confirme que todos os objetos aparecem no app BC Travel.
+3. Crie os 6 objetos personalizados em *Gerenciador de Objetos > Criar*. Para a Reserva, use **numeração automática** no nome do registro.
+4. Crie a **guia (aba)** de cada objeto (*Configuração > Guias > Guias de objeto personalizado*) e inclua-a no app BC Travel. Sem a guia, o objeto não aparece nos itens de navegação.
+5. Crie os campos simples de cada objeto (seções acima).
+6. Crie os **relacionamentos** com as tabelas ainda vazias (Master-Detail só pode ser criado em objeto filho sem registros).
+7. Crie o **Resumo de totalização** (Número de Reservas) e a fórmula de Preço Total no Pacote de Viagem.
+8. Crie o objeto de junção **Pacote-Atividade** com seus dois relacionamentos.
+9. Insira registros de teste e valide (próxima seção).
 
 ---
 
 ## ✅ Testes realizados
 
-Roteiro de validação do modelo:
+Roteiro de validação do modelo (Card 10), usando dados fictícios:
 
-- [ ] Criar um registro de **Destino**
-- [ ] Criar uma **Atividade Turística**
-- [ ] Criar um **Pacote de Viagem** vinculado ao destino
+- [ ] Criar um **Destino** (ex.: Roma, Itália, Europa)
+- [ ] Criar duas **Atividades Turísticas**
+- [ ] Criar um **Pacote de Viagem** ligado ao destino (Preço Base 1.000, nível ⭐⭐⭐)
+- [ ] Conferir **Preço Total = 1.500**
 - [ ] Criar um **Cliente** e conferir o cálculo da **Idade**
-- [ ] Criar **duas Reservas no mesmo pacote** e conferir que o **Número de Reservas = 2**
+- [ ] Criar **duas Reservas no mesmo pacote** e conferir **Número de Reservas = 2**
 - [ ] Conferir a numeração automática das reservas (`RES-0001`, `RES-0002`)
-- [ ] Vincular a atividade ao pacote via **Pacote-Atividade**
+- [ ] Vincular as atividades ao pacote via **Pacote-Atividade**
 - [ ] Verificar as listas relacionadas em Destino, Pacote e Cliente
 
 ---
 
 ## 📸 Evidências (prints)
 
-Salve os prints na pasta `docs/images/` e referencie aqui:
+### Estrutura do app
+
+| | |
+|---|---|
+| **Objetos criados** | ![Objetos](docs/images/01-objetos.png) |
+| **App BC Travel** | ![App](docs/images/04-app-bc-travel.png) |
+
+### Modelo de dados
+
+**Schema Builder**
+
+![Schema Builder](docs/images/03-schema-builder.png)
+
+### Campos dos objetos
+
+| Objeto | Imagem |
+|---|---|
+| Cliente | ![Campos Cliente](docs/images/02-campos-cliente.png) |
+| Destino | ![Campos Destino](docs/images/06-campos-destino.png) |
+| Pacote de Viagem | ![Campos Pacote](docs/images/07-campos-pacote.png) |
+| Reserva | ![Campos Reserva](docs/images/08-campos-reserva.png) |
+
+### Fórmulas e totalizações
 
 | Evidência | Imagem |
 |---|---|
-| Objetos no Gerenciador de Objetos | `![Objetos](docs/images/01-objetos.png)` |
-| Campos do objeto Cliente | `![Campos Cliente](docs/images/02-campos-cliente.png)` |
-| Schema Builder (modelo de dados) | `![Schema Builder](docs/images/03-schema-builder.png)` |
-| App BC Travel com a navegação | `![App](docs/images/04-app-bc-travel.png)` |
-| Pacote com Número de Reservas = 2 | `![Roll-up](docs/images/05-rollup-reservas.png)` |
+| Fórmula do Preço Total | ![Fórmula](docs/images/09-formula-preco-total.png) |
+| Pacote com Número de Reservas = 2 | ![Roll-up](docs/images/05-rollup-reservas.png) |
+
+### Testes com dados
+
+| Evidência | Imagem |
+|---|---|
+| Cliente com Idade calculada | ![Idade](docs/images/12-cliente-idade.png) |
+| Reservas com numeração automática | ![Reservas](docs/images/10-reservas-numeracao.png) |
+| Atividades do pacote | ![Atividades](docs/images/11-pacote-atividades.png) |
+
+> Todos os dados exibidos são **fictícios**.
 
 ---
 
@@ -200,8 +252,10 @@ Salve os prints na pasta `docs/images/` e referencie aqui:
 - O **Resumo de totalização** só existe quando há Master-Detail com o objeto pai
 - Um objeto só aparece na navegação do app se tiver **guia (aba)** criada
 - Um Master-Detail só pode ser criado em objeto filho **sem registros**
+- Um objeto aceita no máximo **dois** Master-Detail
 - Uso de **objeto de junção** para relações muitos-para-muitos
-- Fórmulas e numeração automática como forma de reduzir erro de digitação
+- Fórmulas com `CASE`, `IF` e funções de texto para regras de preço
+- Numeração automática como forma de reduzir erro de digitação
 
 ---
 
@@ -212,13 +266,14 @@ Salve os prints na pasta `docs/images/` e referencie aqui:
 - [ ] Montar **Páginas Lightning** e layouts personalizados
 - [ ] Criar **relatórios e dashboards** (reservas por destino, receita por pacote)
 - [ ] Configurar **perfis e conjuntos de permissões**
+- [ ] Adaptar o modelo para um novo projeto de **gestão de logística**
 - [ ] Estudar a evolução do projeto com Apex e LWC
 
 ---
 
 ## 👤 Autor
 
-**José Carlos Almeida**
+**José Carlos Almeida Trindade**
 
 - GitHub: [github.com/jcalmeida-ds](https://github.com/jcalmeida-ds)
 - LinkedIn: [linkedin.com/in/jcalmeida-datascience](https://linkedin.com/in/jcalmeida-datascience)
