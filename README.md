@@ -239,7 +239,7 @@ Roteiro de validação do modelo (Card 10), usando dados fictícios:
 | Evidência | Imagem |
 |---|---|
 | Cliente com Idade calculada | ![Idade](docs/imagens/12-cliente-idade.png.jpeg) |
-| Reservas com numeração automática | ![Reservas](docs/imagens/10-reservas-numeracao.png) |
+| Reservas com numeração automática | ![Reservas](docs/imagens/10-reservas-numeracao.png.jpeg) |
 | Atividades do pacote | ![Atividades](docs/imagens/11-pacote-atividades.png) |
 
 > Todos os dados exibidos são **fictícios**.
