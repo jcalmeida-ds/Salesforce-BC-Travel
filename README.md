@@ -231,7 +231,7 @@ Roteiro de validação do modelo (Card 10), usando dados fictícios:
 
 | Evidência | Imagem |
 |---|---|
-| Fórmula do Preço Total | ![Fórmula](docs/imagens/09-formula-preco-total.png) |
+| Fórmula do Preço Total | ![Fórmula](docs/imagens/09-formula-preco-total.png.jpeg) |
 | Pacote com Número de Reservas = 2 | ![Roll-up](docs/imagens/05-rollup-reservas.png.jpeg) |
 
 ### Testes com dados
@@ -240,7 +240,7 @@ Roteiro de validação do modelo (Card 10), usando dados fictícios:
 |---|---|
 | Cliente com Idade calculada | ![Idade](docs/imagens/12-cliente-idade.png.jpeg) |
 | Reservas com numeração automática | ![Reservas](docs/imagens/10-reservas-numeracao.png.jpeg) |
-| Atividades do pacote | ![Atividades](docs/imagens/11-pacote-atividades.png) |
+| Atividades do pacote | ![Atividades](docs/imagens/11-pacote-atividades.png.jpeg) |
 
 > Todos os dados exibidos são **fictícios**.
 
