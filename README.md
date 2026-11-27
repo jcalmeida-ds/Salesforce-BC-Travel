@@ -191,15 +191,15 @@ IF(ISPICKVAL(Nivel_de_Luxo__c, ""),
 
 Roteiro de validação do modelo (Card 10), usando dados fictícios:
 
-- [ ] Criar um **Destino** (ex.: Roma, Itália, Europa)
-- [ ] Criar duas **Atividades Turísticas**
-- [ ] Criar um **Pacote de Viagem** ligado ao destino (Preço Base 1.000, nível ⭐⭐⭐)
-- [ ] Conferir **Preço Total = 1.500**
-- [ ] Criar um **Cliente** e conferir o cálculo da **Idade**
-- [ ] Criar **duas Reservas no mesmo pacote** e conferir **Número de Reservas = 2**
-- [ ] Conferir a numeração automática das reservas (`RES-0001`, `RES-0002`)
-- [ ] Vincular as atividades ao pacote via **Pacote-Atividade**
-- [ ] Verificar as listas relacionadas em Destino, Pacote e Cliente
+- [X] Criar um **Destino** (ex.: Roma, Itália, Europa)
+- [X] Criar duas **Atividades Turísticas**
+- [X] Criar um **Pacote de Viagem** ligado ao destino (Preço Base 1.000, nível ⭐⭐⭐)
+- [X] Conferir **Preço Total = 1.500**
+- [X] Criar um **Cliente** e conferir o cálculo da **Idade**
+- [X] Criar **duas Reservas no mesmo pacote** e conferir **Número de Reservas = 2**
+- [X] Conferir a numeração automática das reservas (`RES-0001`, `RES-0002`)
+- [X] Vincular as atividades ao pacote via **Pacote-Atividade**
+- [X] Verificar as listas relacionadas em Destino, Pacote e Cliente
 
 ---
 
@@ -232,13 +232,13 @@ Roteiro de validação do modelo (Card 10), usando dados fictícios:
 | Evidência | Imagem |
 |---|---|
 | Fórmula do Preço Total | ![Fórmula](docs/imagens/09-formula-preco-total.png) |
-| Pacote com Número de Reservas = 2 | ![Roll-up](docs/imagens/05-rollup-reservas.png) |
+| Pacote com Número de Reservas = 2 | ![Roll-up](docs/imagens/05-rollup-reservas.png.jpeg) |
 
 ### Testes com dados
 
 | Evidência | Imagem |
 |---|---|
-| Cliente com Idade calculada | ![Idade](docs/imagens/12-cliente-idade.png) |
+| Cliente com Idade calculada | ![Idade](docs/imagens/12-cliente-idade.png.jpeg) |
 | Reservas com numeração automática | ![Reservas](docs/imagens/10-reservas-numeracao.png) |
 | Atividades do pacote | ![Atividades](docs/imagens/11-pacote-atividades.png) |
 
